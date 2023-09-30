@@ -1,21 +1,22 @@
 [
-	"VCALENDAR": [
-		"VERSION": 2.0,
-		"CALSCALE": "GREGORIAN",
-		"VEVENT": [
-			"SUMMARY": "Access-A-Ride Pickup",
-			"VALARM": [
-				"TRIGGER": "-PT10M",
+	["VCALENDAR", [
+		["VERSION", 2.0],
+		["CALSCALE", "GREGORIAN"],
+		["VEVENT", [
+			["SUMMARY", "Access-A-Ride Pickup"]
+			["VALARM", [
+				["TRIGGER", "-PT10M"]
 			],
-			"VALARM": [
-				"TRIGGER": "-PT10M",
-				"DESCRIPTION": "I am different"
+			["VALARM", [
+				["TRIGGER", "-PT10M"],
+				["DESCRIPTION", "I am different"]
+			],
 		],
-		"VEVENT": [
-			"DESCRIPTION": "Different"
+		["VEVENT", [
+			["DESCRIPTION", "Different"]
 		],
-		"VJOURNAL": [
-			"DESCRIPTION": "I am a Journal Component",
+		["VJOURNAL", [
+			["DESCRIPTION", "I am a Journal Component"]
 		]
 	]
 ]

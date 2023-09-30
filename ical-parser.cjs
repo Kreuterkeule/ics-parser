@@ -1,28 +1,23 @@
 module.exports = class IcsParser {
-	next(arr, obj) {
-	
-		let line = arr.splice(0,1)[0];
-		console.log(line)
-		switch(line[0]) 
-		{
-			case 'BEGIN':
-				console.log(`BEGINING SUB OBJECT ${line[1]}`)
-				obj.push([line[1], this.parseString(arr.map(e => e.join(':')).join('\n'))]);
-				break;
-			case 'END':
-				console.log(`ENDING SUB OBJECT ${line[1]}`)
-				//console.log(arr.slice(0,1))
-				return null;
-			default:	
-				obj.push([line[0], line[1]]);
+	beautify(arr) {
+		console.log("@@@ BEAUTIFY @@@");
+		if (typeof arr == 'string') {
+			return arr;
 		}
-	
-		return arr;
-	}
+		let keys = arr.map(e => e[0].split(';')[0]);
 
+		let obj = {};
+		keys.forEach(e => obj[e] = []);
+
+		arr.forEach((e, i) => console.log(`ELEMENT ${i}: ${e}`));
+		arr.forEach((e, i) => {
+			console.log(i)
+			obj[e[0].split(';')[0]].push(this.beautify(e[1]));
+		});		
+		return obj
+	}
 	parseString(cs) {
 		
-		let result = [];
 	
 		let arr = cs.split('\n');
 		
@@ -30,19 +25,33 @@ module.exports = class IcsParser {
 	
 		arr = arr.filter(e => JSON.stringify(e) != JSON.stringify(['', ''])); // remove empty lines
 	
-		for (let line of arr) {
-		
-			let resultVar = this.next(arr, result);
-			if (resultVar == null) {
-				break;
-			} else {
-				arr = resultVar.map(e => e);
-			}
-			
-		}
-	
-		return result;
-	
+		let result = this.parseArr(arr);	
+		return this.beautify(result);	
 	}
+
+	parseArr(arr) {
+
+		let result = []
+
+		for (let line of arr) {
+
+			let resultVar;
+
+			let line = arr.splice(0,1)[0];
+
+			switch(line[0]) {
+				case "BEGIN":
+					result.push([line[1], this.parseArr(arr)]);
+					break;
+				case "END":
+					return result;
+				default:
+					result.push([line[0], line[1]]);
+			}
+
+		}
+		return result;
+	}
+
 }
 
