@@ -1,6 +1,5 @@
 module.exports = class IcsParser {
 	beautify(arr) {
-		console.log("@@@ BEAUTIFY @@@");
 		if (typeof arr == 'string') {
 			return arr;
 		}
@@ -9,9 +8,7 @@ module.exports = class IcsParser {
 		let obj = {};
 		keys.forEach(e => obj[e] = []);
 
-		arr.forEach((e, i) => console.log(`ELEMENT ${i}: ${e}`));
 		arr.forEach((e, i) => {
-			console.log(i)
 			obj[e[0].split(';')[0]].push(this.beautify(e[1]));
 		});		
 		return obj
